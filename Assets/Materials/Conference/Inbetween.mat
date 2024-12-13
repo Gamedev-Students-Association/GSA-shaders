@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Inbetween
+  m_Shader: {fileID: 4800000, guid: 3919a3b6595bee64dacf28ccac3303e3, type: 3}
+  m_Parent: {fileID: 2100000, guid: f48cfa4c54fa2704e8bf260e5e12be90, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _CenterCubesValue: 0.251
+    - _Epsilon: 31.73
+    - _FadeIntensity: 1.92
+    - _GlowMaxValue: 0.92
+    - _GlowMinSaturation: 0.88
+    - _GlowSeed: 0.04
+    - _GlowThreshold: 0.224
+    - _GridRotation: -2.44
+    - _HueShift: 3.3
+    - _HueStatic: 4.61
+    - _LinesDarken: 0.969
+    - _SaturationSeed: 2.85
+    - _ValueSeed: 1.26
+    m_Colors:
+    - _CubeSize: {r: 0.94, g: 0.9, b: 0, a: 0}
+    - _CubesSaturation: {r: 1.04, g: 0.57, b: 0, a: 0}
+    - _CubesValue: {r: 0.23, g: 0.6, b: 0, a: 0}
+    - _GridScale: {r: 0.01, g: 0.01, b: 0, a: 0}
+    - _GridTiltX: {r: 16.05, g: 0.03, b: 20.53, a: 0}
+    - _GridTiltY: {r: 5.73, g: 0.04, b: 10.24, a: 0.13}
+    - _GridTranslation: {r: 0.01, g: 0, b: 0, a: 0}
+    - _HueExponenta: {r: 1.03, g: 1.66, b: 1, a: 3}
+    - _HueScale: {r: -0.57, g: 0.69, b: 0, a: 0.03}
+    - _HueSign: {r: -0.49, g: 0, b: 1.33, a: 2.07}
+    - _LineASpread: {r: 0.09, g: 12, b: 0, a: 0}
+    - _LineBSpread: {r: -6.21, g: 6, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
