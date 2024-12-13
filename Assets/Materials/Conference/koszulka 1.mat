@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: koszulka
-  m_Shader: {fileID: 4800000, guid: 3919a3b6595bee64dacf28ccac3303e3, type: 3}
+  m_Name: koszulka 1
+  m_Shader: {fileID: 4800000, guid: ca5af65e26e22b34da1b77bdb20ada98, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

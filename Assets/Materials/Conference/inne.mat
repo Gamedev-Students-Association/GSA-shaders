@@ -114,8 +114,9 @@ Material:
     - _HueScale: {r: 1, g: 1, b: 0, a: 0}
     - _HueShiftExponenta: {r: 1, g: 3, b: 1, a: 3}
     - _HueShiftScale: {r: 1, g: 1, b: 0, a: 0}
-    - _HueSign: {r: -1, g: -1, b: 1, a: 1}
+    - _HueSign: {r: -1, g: -1, b: -1, a: -1}
     - _LineASpread: {r: 0.2, g: 12, b: 0, a: 0}
     - _LineBSpread: {r: -6, g: 6, b: 0, a: 0}
     - _LinesCenterPos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: koszulka
+  m_Name: koszulka 2
   m_Shader: {fileID: 4800000, guid: 3919a3b6595bee64dacf28ccac3303e3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -69,20 +69,20 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Epsilon: 31.9
-    - _FadeIntensity: 4
-    - _FadeSmoothness: 1
+    - _FadeIntensity: 2.6
+    - _FadeSmoothness: 2400
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowMaxValue: 1
     - _GlowMinSaturation: 0.5
     - _GlowSeed: 0
-    - _GlowThreshold: 0.381
+    - _GlowThreshold: 0
     - _GraphicStyle: 0
     - _GridRotation: 0
     - _HueShift: 0.63
-    - _HueStatic: -1
-    - _LinesCount: 7
+    - _HueStatic: 0.6
+    - _LinesCount: 0
     - _LinesDarken: 0.8
     - _LinesSeed: 0.24
     - _Metallic: 0
@@ -102,7 +102,7 @@ Material:
     - _CompoundLineRange: {r: 2, g: 6, b: 0, a: 0}
     - _CubeSize: {r: 0.9, g: 0.9, b: 0, a: 0}
     - _CubesSaturation: {r: 0.6, g: 0.6, b: 0, a: 0}
-    - _CubesValue: {r: 0.4, g: 0.6, b: 0, a: 0}
+    - _CubesValue: {r: 0.6, g: 0.6, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlowScale: {r: 0, g: 0, b: 0, a: 0}
     - _GridScale: {r: 0.02, g: 0.02, b: 0, a: 0}

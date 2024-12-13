@@ -56,8 +56,8 @@ Shader "Hidden/GSAConferenceShader"
         Pass
         {
             CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            #pragma vertex vert keepalpha
+            #pragma fragment frag keepalpha
 
             #include "UnityCG.cginc"
 
@@ -383,7 +383,30 @@ Shader "Hidden/GSAConferenceShader"
                         {
                             float removalValue = pow((1 - (removalDist - distRand)), _FadeSmoothness);
                             hsv.z *= removalValue;
+                            /*
+                            if (hsv.z > 1)
+                            {
+                                col = float4(1, 1, 1, 1);
+                            }
+                            else
+                            {
+                                col = float4(HSVtoRGB(hsv), removalValue);
+                            }
+                            */
                             col = float4(HSVtoRGB(hsv), removalValue);
+                            //removalValue *= 200;
+                            //col = float4(removalValue, removalValue, removalValue, 1);
+                            /*
+                            if (removalValue < 1)
+                            {
+                                col = _BackgroundColor;
+                            }
+                            else
+                            {
+                                col = ColorBlend(_BackgroundColor, col);
+                            }
+                            */
+                            //col = ColorBlend(_BackgroundColor, col);
                         }
                         else
                         {
@@ -398,7 +421,9 @@ Shader "Hidden/GSAConferenceShader"
                     }
                 }
 
+                //col = ColorBlend(_BackgroundColor, col);
                 return col;
+                //return float4(col.w, col.w, col.w, col.w);
             }
             ENDCG
         }
