@@ -11,6 +11,7 @@ Shader "Hidden/GSAConferenceShader"
 {
     Properties
     {
+<<<<<<< Updated upstream
         _MainTex ("Texture", 2D) = "white" {}
         _BackgroundColor ("_BackgroundColor", Color) = (0, 0, 0, 0)
         _Epsilon ("_Epsilon", float) = 64
@@ -37,13 +38,44 @@ Shader "Hidden/GSAConferenceShader"
         _GlowMaxValue ("_GlowMaxValue", float) = 0
         _FadeIntensity ("_FadeIntensity", float) = 0
         _FadeSmoothness ("_FadeSmoothness", float) = 1
+=======
+        _MainTex("Texture", 2D) = "white" {}
+        _BackgroundColor("_BackgroundColor", Color) = (0, 0, 0, 0)
+        _Epsilon("_Epsilon", float) = 64
+        _GridTranslation("_GridTranslation", vector) = (0, 0, 0, 0)
+        _GridRotation("_GridRotation", float) = 0
+        _GridTiltX("_GridTiltX", vector) = (0, 0, 0, 0)
+        _GridTiltY("_GridTiltY", vector) = (0, 0, 0, 0)
+        _GridScale("_GridScale", vector) = (0, 0, 0, 0)
+        _GridScreenAlign("_GridScreenAlign", int) = 1
+        _CubeSize("_CubeSize", vector) = (0, 0, 0, 0)
+        _CubeCornerSize("_CubeCornerSize", float) = 0
+        _HueShift("_HueShift", float) = 0
+        _HueStatic("_HueStatic", float) = -1
+        _HueSign("_HueSign",  vector) = (1, 1, -1, -1)
+        _HueScale("_HueScale", vector) = (0, 0, 0, 0)
+        _HueExponenta("_HueExponenta", vector) = (1, 1, 1, 1)
+        _CenterCubesValue("_CenterCubesValue", range(0, 1)) = 0
+        _CubesSaturation("_CubesSaturation", vector) = (0, 0, 0, 0)
+        _CubesValue("_CubesValue", vector) = (0, 0, 0, 0)
+        _SaturationSeed("_SaturationSeed", float) = 0
+        _ValueSeed("_ValueSeed", float) = 0
+        _GlowThreshold("_GlowThreshold", range(0, 1)) = 0
+        _GlowSeed("_GlowSeed", float) = 0
+        _GlowMinSaturation("_GlowMinSaturation", float) = 0
+        _GlowMaxValue("_GlowMaxValue", float) = 0
+        _FadeAspect("_FadeAspect", vector) = (1, 1, 0, 0)
+        _FadeSeed("_FadeSeed", float) = 2
+        _FadeIntensity("_FadeIntensity", float) = 0
+        _FadeSmoothness("_FadeSmoothness", float) = 1
+>>>>>>> Stashed changes
 
         //_LinesCenterPos ("_LinesCenterPos", vector) = ()
-        _LinesCount ("_LinesCount", int) = 0
-        _LinesDarken ("_LinesDarken", range(0, 1)) = 0
-        _LinesSeed ("_LinesSeed", float) = 0
-        _LineASpread ("_LineASpread", vector) = (0.5, 12, 0, 0)
-        _LineBSpread ("_LineBSpread", vector) = (-6, 6, 0, 0)
+        _LinesCount("_LinesCount", int) = 0
+        _LinesDarken("_LinesDarken", range(0, 1)) = 0
+        _LinesSeed("_LinesSeed", float) = 0
+        _LineASpread("_LineASpread", vector) = (0.5, 12, 0, 0)
+        _LineBSpread("_LineBSpread", vector) = (-6, 6, 0, 0)
         _CompoundLineRange("_CompoundLineRange", vector) = (1, 1, 0, 0)
 
         _GraphicStyle ("_Style", int) = 0 //0 = image pattern 1 = text pattern
@@ -192,6 +224,11 @@ Shader "Hidden/GSAConferenceShader"
             uniform float _GlowSeed;
             uniform float _GlowMinSaturation;
             uniform float _GlowMaxValue;
+<<<<<<< Updated upstream
+=======
+            uniform vector _FadeAspect; //float2
+            uniform float _FadeSeed;
+>>>>>>> Stashed changes
             uniform float _FadeIntensity;
             uniform float _FadeSmoothness;
 
@@ -377,7 +414,7 @@ Shader "Hidden/GSAConferenceShader"
                             angle = 0.5 + (1 - angle) / 2;
                         }
                         
-                        float distRand = PseudoRand(angle, 2);
+                        float distRand = PseudoRand(angle, _FadeSeed);
                         removalDist *= _FadeIntensity;
                         if (removalDist > distRand)
                         {
