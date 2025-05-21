@@ -11,34 +11,6 @@ Shader "Hidden/GSAConferenceShader"
 {
     Properties
     {
-<<<<<<< Updated upstream
-        _MainTex ("Texture", 2D) = "white" {}
-        _BackgroundColor ("_BackgroundColor", Color) = (0, 0, 0, 0)
-        _Epsilon ("_Epsilon", float) = 64
-        _GridTranslation ("_GridTranslation", vector) = (0, 0, 0, 0)
-        _GridRotation ("_GridRotation", float) = 0
-        _GridTiltX ("_GridTiltX", vector) = (0, 0, 0, 0)
-        _GridTiltY ("_GridTiltY", vector) = (0, 0, 0, 0)
-        _GridScale ("_GridScale", vector) = (0, 0, 0, 0)
-        _CubeSize ("_CubeSize", vector) = (0, 0, 0, 0)
-        _CubeCornerSize ("_CubeCornerSize", float) = 0
-        _HueShift ("_HueShift", float) = 0
-        _HueStatic ("_HueStatic", float) = -1
-        _HueSign ("_HueSign",  vector) = (1, 1, -1, -1)
-        _HueScale ("_HueScale", vector) = (0, 0, 0, 0)
-        _HueExponenta ("_HueExponenta", vector) = (1, 1, 1, 1)
-        _CenterCubesValue ("_CenterCubesValue", range(0, 1)) = 0
-        _CubesSaturation ("_CubesSaturation", vector) = (0, 0, 0, 0)
-        _CubesValue("_CubesValue", vector) = (0, 0, 0, 0)
-        _SaturationSeed ("_SaturationSeed", float) = 0
-        _ValueSeed ("_ValueSeed", float) = 0
-        _GlowThreshold ("_GlowThreshold", range(0, 1)) = 0
-        _GlowSeed ("_GlowSeed", float) = 0
-        _GlowMinSaturation ("_GlowMinSaturation", float) = 0
-        _GlowMaxValue ("_GlowMaxValue", float) = 0
-        _FadeIntensity ("_FadeIntensity", float) = 0
-        _FadeSmoothness ("_FadeSmoothness", float) = 1
-=======
         _MainTex("Texture", 2D) = "white" {}
         _BackgroundColor("_BackgroundColor", Color) = (0, 0, 0, 0)
         _Epsilon("_Epsilon", float) = 64
@@ -68,191 +40,192 @@ Shader "Hidden/GSAConferenceShader"
         _FadeSeed("_FadeSeed", float) = 2
         _FadeIntensity("_FadeIntensity", float) = 0
         _FadeSmoothness("_FadeSmoothness", float) = 1
->>>>>>> Stashed changes
 
-        //_LinesCenterPos ("_LinesCenterPos", vector) = ()
-        _LinesCount("_LinesCount", int) = 0
-        _LinesDarken("_LinesDarken", range(0, 1)) = 0
-        _LinesSeed("_LinesSeed", float) = 0
-        _LineASpread("_LineASpread", vector) = (0.5, 12, 0, 0)
-        _LineBSpread("_LineBSpread", vector) = (-6, 6, 0, 0)
-        _CompoundLineRange("_CompoundLineRange", vector) = (1, 1, 0, 0)
+            //_LinesCenterPos ("_LinesCenterPos", vector) = ()
+            _LinesCount("_LinesCount", int) = 0
+            _LinesDarken("_LinesDarken", range(0, 1)) = 0
+            _LinesSeed("_LinesSeed", float) = 0
+            _LineASpread("_LineASpread", vector) = (0.5, 12, 0, 0)
+            _LineBSpread("_LineBSpread", vector) = (-6, 6, 0, 0)
+            _CompoundLineRange("_CompoundLineRange", vector) = (1, 1, 0, 0)
 
-        _GraphicStyle ("_Style", int) = 0 //0 = image pattern 1 = text pattern
+            _GraphicStyle("_Style", int) = 0 //0 = image pattern 1 = text pattern
     }
-    SubShader
-    {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
-
-        Pass
+        SubShader
         {
-            CGPROGRAM
-            #pragma vertex vert keepalpha
-            #pragma fragment frag keepalpha
+            // No culling or depth
+            Cull Off ZWrite Off ZTest LEqual
+            Blend SrcAlpha OneMinusSrcAlpha
 
-            #include "UnityCG.cginc"
-
-            struct appdata
+            Pass
             {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-            };
+                CGPROGRAM
+                #pragma vertex vert
+                #pragma fragment frag
 
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-                float4 screenPos : TEXCOORD1;
-            };
+                #include "UnityCG.cginc"
 
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.screenPos = ComputeScreenPos(o.vertex);
-                o.uv = v.uv;
-                return o;
-            }
-
-
-            float4 ColorBlend(float4 bgCol, float4 adCol)
-            {
-                float4 result = float4(1, 1, 1, 1);
-                result.a = 1 - (1 - adCol.a) * (1 - bgCol.a);
-                result.rgb = adCol.rgb * adCol.a / result.a + bgCol.rgb * bgCol.a * (1 - adCol.a) / result.a;
-
-                return result;
-            }
-
-            //rgb/hsv convertions //yoinked from internet
-            float3 HUEtoRGB(in float H)
-            {
-                float R = abs(H * 6 - 3) - 1;
-                float G = 2 - abs(H * 6 - 2);
-                float B = 2 - abs(H * 6 - 4);
-                return saturate(float3(R, G, B));
-            }
-            float3 HSVtoRGB(in float3 HSV)
-            {
-                float3 RGB = HUEtoRGB(HSV.x);
-                return ((RGB - 1) * HSV.y + 1) * HSV.z;
-            }
-
-            float Epsilon = 1e-10;
-
-            float3 RGBtoHCV(in float3 RGB)
-            {
-                // Based on work by Sam Hocevar and Emil Persson
-                float4 P = (RGB.g < RGB.b) ? float4(RGB.bg, -1.0, 2.0 / 3.0) : float4(RGB.gb, 0.0, -1.0 / 3.0);
-                float4 Q = (RGB.r < P.x) ? float4(P.xyw, RGB.r) : float4(RGB.r, P.yzx);
-                float C = Q.x - min(Q.w, Q.y);
-                float H = abs((Q.w - Q.y) / (6 * C + Epsilon) + Q.z);
-                return float3(H, C, Q.x);
-            }
-            float3 RGBtoHSV(in float3 RGB)
-            {
-                float3 HCV = RGBtoHCV(RGB);
-                float S = HCV.y / (HCV.z + Epsilon);
-                return float3(HCV.x, S, HCV.z);
-            }
-
-            //2d rotation (in angles)
-            float2 rot2D(float2 pos, float rot)
-            {
-                rot = rot * 3.14 / 180;
-                float cs = cos(rot);
-                float sn = sin(rot);
-                float2x2 rotMatrix = float2x2(cs, sn, -sn, cs);
-                return mul(rotMatrix, pos);
-            }
-
-            //cube generation
-            float CubeShape2D(float2 p, float3 s)
-            {
-                p = abs(p);
-
-                //p /= s.xy;
-
-                float result = length(float2(max(0, p.x - s.x), max(0, p.y - s.y)));
-                if (p.x < s.x && p.y < s.y)
+                struct appdata
                 {
-                    result = max(p.x - s.x, p.y - s.y);
+                    float4 vertex : POSITION;
+                    float2 uv : TEXCOORD0;
+                };
+
+                struct v2f
+                {
+                    float2 uv : TEXCOORD0;
+                    float4 vertex : SV_POSITION;
+                    float4 screenPos : TEXCOORD1;
+                };
+
+                v2f vert(appdata v)
+                {
+                    v2f o;
+                    o.vertex = UnityObjectToClipPos(v.vertex);
+                    o.screenPos = ComputeScreenPos(o.vertex);
+                    o.uv = v.uv;
+                    return o;
                 }
 
-                return result - s.z;
-            }
 
-            //noises
-            float PseudoRand(float data, float seed)
-            {
-                return frac(sin(dot(float2(data, seed), float2(12.9898, 78.233))) * 43758.5453);
-            }
+                float4 ColorBlend(float4 bgCol, float4 adCol)
+                {
+                    float4 result = float4(1, 1, 1, 1);
+                    result.a = 1 - (1 - adCol.a) * (1 - bgCol.a);
+                    result.rgb = adCol.rgb * adCol.a / result.a + bgCol.rgb * bgCol.a * (1 - adCol.a) / result.a;
 
-            float2 WhiteNoise2d(float2 data, float2 seed)
-            {
-                return float2(PseudoRand(data.x, seed.x), PseudoRand(data.y, seed.y));
-            }
+                    return result;
+                }
 
-            float2 LinearCombineNoise2d(float2 pos, float2 seed)
-            {
-                return WhiteNoise2d(float2((pos.x * pos.y) * pos.y, (pos.x * pos.y) * pos.x), seed);
-            }
+                //rgb/hsv convertions //yoinked from internet
+                float3 HUEtoRGB(in float H)
+                {
+                    float R = abs(H * 6 - 3) - 1;
+                    float G = 2 - abs(H * 6 - 2);
+                    float B = 2 - abs(H * 6 - 4);
+                    return saturate(float3(R, G, B));
+                }
+                float3 HSVtoRGB(in float3 HSV)
+                {
+                    float3 RGB = HUEtoRGB(HSV.x);
+                    return ((RGB - 1) * HSV.y + 1) * HSV.z;
+                }
 
-            sampler2D _MainTex;
-            uniform vector _BackgroundColor;
-            uniform float _Epsilon;
+                float Epsilon = 1e-10;
 
-            uniform vector _GridTranslation; //float2
-            uniform float _GridRotation;
-            uniform vector _GridTiltX;
-            uniform vector _GridTiltY;
-            uniform vector _GridScale; //float2
-            uniform vector _CubeSize; //float2
-            uniform float _CubeCornerSize;
-            uniform float _HueShift;
-            uniform float _HueStatic;
-            uniform vector _HueSign;
-            uniform vector _HueScale; //actually vect4, every one another direction
-            uniform vector _HueExponenta;
-            uniform float _CenterCubesValue;
-            uniform vector _CubesSaturation; //float2 (range)
-            uniform vector _CubesValue; //float2 (range)
-            uniform float _SaturationSeed;
-            uniform float _ValueSeed;
-            uniform float _GlowThreshold;
-            uniform float _GlowSeed;
-            uniform float _GlowMinSaturation;
-            uniform float _GlowMaxValue;
-<<<<<<< Updated upstream
-=======
-            uniform vector _FadeAspect; //float2
-            uniform float _FadeSeed;
->>>>>>> Stashed changes
-            uniform float _FadeIntensity;
-            uniform float _FadeSmoothness;
+                float3 RGBtoHCV(in float3 RGB)
+                {
+                    // Based on work by Sam Hocevar and Emil Persson
+                    float4 P = (RGB.g < RGB.b) ? float4(RGB.bg, -1.0, 2.0 / 3.0) : float4(RGB.gb, 0.0, -1.0 / 3.0);
+                    float4 Q = (RGB.r < P.x) ? float4(P.xyw, RGB.r) : float4(RGB.r, P.yzx);
+                    float C = Q.x - min(Q.w, Q.y);
+                    float H = abs((Q.w - Q.y) / (6 * C + Epsilon) + Q.z);
+                    return float3(H, C, Q.x);
+                }
+                float3 RGBtoHSV(in float3 RGB)
+                {
+                    float3 HCV = RGBtoHCV(RGB);
+                    float S = HCV.y / (HCV.z + Epsilon);
+                    return float3(HCV.x, S, HCV.z);
+                }
 
-            uniform uint _LinesCount;
-            uniform float _LinesDarken;
-            uniform float _LinesSeed;
+                //2d rotation (in angles)
+                float2 rot2D(float2 pos, float rot)
+                {
+                    rot = rot * 3.14 / 180;
+                    float cs = cos(rot);
+                    float sn = sin(rot);
+                    float2x2 rotMatrix = float2x2(cs, sn, -sn, cs);
+                    return mul(rotMatrix, pos);
+                }
 
-            uniform vector _LineASpread;
-            uniform vector _LineBSpread;
+                //cube generation
+                float CubeShape2D(float2 p, float3 s)
+                {
+                    p = abs(p);
 
-            uniform vector _CompoundLineRange;
+                    //p /= s.xy;
 
-            uniform uint _GraphicStyle;
+                    float result = length(float2(max(0, p.x - s.x), max(0, p.y - s.y)));
+                    if (p.x < s.x && p.y < s.y)
+                    {
+                        result = max(p.x - s.x, p.y - s.y);
+                    }
 
-            fixed4 frag(v2f i) : SV_Target
-            {
-                //used for better random generation
-                float epsilon = _Epsilon;
+                    return result - s.z;
+                }
+
+                //noises
+                float PseudoRand(float data, float seed)
+                {
+                    return frac(sin(dot(float2(data, seed), float2(12.9898, 78.233))) * 43758.5453);
+                }
+
+                float2 WhiteNoise2d(float2 data, float2 seed)
+                {
+                    return float2(PseudoRand(data.x, seed.x), PseudoRand(data.y, seed.y));
+                }
+
+                float2 LinearCombineNoise2d(float2 pos, float2 seed)
+                {
+                    return WhiteNoise2d(float2((pos.x * pos.y) * pos.y, (pos.x * pos.y) * pos.x), seed);
+                }
+
+                sampler2D _MainTex;
+                uniform vector _BackgroundColor;
+                uniform float _Epsilon;
+
+                uniform vector _GridTranslation; //float2
+                uniform float _GridRotation;
+                uniform vector _GridTiltX;
+                uniform vector _GridTiltY;
+                uniform vector _GridScale; //float2
+                uniform int _GridScreenAlign; //bool
+                uniform vector _CubeSize; //float2
+                uniform float _CubeCornerSize;
+                uniform float _HueShift;
+                uniform float _HueStatic;
+                uniform vector _HueSign;
+                uniform vector _HueScale; //actually vect4, every one another direction
+                uniform vector _HueExponenta;
+                uniform float _CenterCubesValue;
+                uniform vector _CubesSaturation; //float2 (range)
+                uniform vector _CubesValue; //float2 (range)
+                uniform float _SaturationSeed;
+                uniform float _ValueSeed;
+                uniform float _GlowThreshold;
+                uniform float _GlowSeed;
+                uniform float _GlowMinSaturation;
+                uniform float _GlowMaxValue;
+                uniform vector _FadeAspect; //float2
+                uniform float _FadeSeed;
+                uniform float _FadeIntensity;
+                uniform float _FadeSmoothness;
+
+                uniform uint _LinesCount;
+                uniform float _LinesDarken;
+                uniform float _LinesSeed;
+
+                uniform vector _LineASpread;
+                uniform vector _LineBSpread;
+
+                uniform vector _CompoundLineRange;
+
+                uniform uint _GraphicStyle;
+
+                fixed4 frag(v2f i) : SV_Target
+                {
+                    //used for better random generation
+                    float epsilon = _Epsilon;
                 //i.uv = i.screenPos.xy / i.screenPos.w;
                 fixed4 col = tex2D(_MainTex, i.uv);
                 //center transform
                 float2 transform = i.uv - float2(0.5, 0.5);
                 //apply aspect ratio so that square grid scale generates squares
-                transform = float2(transform.x, transform.y / (_ScreenParams.x / _ScreenParams.y));
+                if (_GridScreenAlign > 0)
+                {
+                    transform = float2(transform.x, transform.y / (_ScreenParams.x / _ScreenParams.y));
+                }
 
                 //will be useful later when no tilting is required
                 float2 orgTransform = transform;
@@ -279,7 +252,7 @@ Shader "Hidden/GSAConferenceShader"
                     float3 cubeScale = float3(_CubeSize.x * (1 - _CubeCornerSize), _CubeSize.y * (1 - _CubeCornerSize), min(_CubeSize.x, _CubeSize.y) * _CubeCornerSize);
                     float cubeDist = CubeShape2D(chunkPos, cubeScale);
 
-                    
+
                     if (cubeDist < 0)
                     {
                         float2 removalChunkId = chunkId - _GridScale * sign(chunkId);
@@ -293,7 +266,7 @@ Shader "Hidden/GSAConferenceShader"
 
                         float2 hueChunkId = chunkId;
                         hueChunkId *= _HueScale.xy;
-                        
+
                         if (abs(hueChunkId.x) < abs(hueChunkId.y))
                         {
                             hueChunkId.y /= (1 + length(hueChunkId));
@@ -337,7 +310,7 @@ Shader "Hidden/GSAConferenceShader"
 
                         col = float4(HUEtoRGB(hue), 1);
                         float3 hsv = RGBtoHSV(col.xyz);
-                        
+
                         //randomized saturation per block
                         float cubeSaturation = lerp(_CubesSaturation.x, _CubesSaturation.y, LinearCombineNoise2d(chunkId + epsilon, _SaturationSeed).x);;
                         float cubeValue = lerp(_CubesValue.x, _CubesValue.y, LinearCombineNoise2d(chunkId + epsilon, _ValueSeed).x);
@@ -365,7 +338,7 @@ Shader "Hidden/GSAConferenceShader"
 
 
                         //randomized shading lines
-                        
+
                         float seed = _LinesSeed;
                         float linesHitThreshold = round(lerp(_CompoundLineRange.x, _CompoundLineRange.y, PseudoRand(seed, 0)));
                         float linesHitRatio = 0;
@@ -391,7 +364,7 @@ Shader "Hidden/GSAConferenceShader"
                                     linesHitRatio += 1;
                                 }
                             }
-                            
+
                             //if under consequtive lines then darken
                             if (linesHitRatio >= linesHitThreshold)
                             {
@@ -402,7 +375,7 @@ Shader "Hidden/GSAConferenceShader"
                         }
 
                         //removes cubes based on distance
-                        float removalDist = length(removalChunkId);
+                        float removalDist = length(float2(removalChunkId.x / _FadeAspect.x, removalChunkId.y / _FadeAspect.y));
                         float2 normId = chunkId / length(chunkId);
                         float angle = abs(atan2(normId.x, normId.y) / 3.14);
                         if (chunkId.x > 0) //1 half
@@ -413,44 +386,21 @@ Shader "Hidden/GSAConferenceShader"
                         {
                             angle = 0.5 + (1 - angle) / 2;
                         }
-                        
+
                         float distRand = PseudoRand(angle, _FadeSeed);
                         removalDist *= _FadeIntensity;
                         if (removalDist > distRand)
                         {
                             float removalValue = pow((1 - (removalDist - distRand)), _FadeSmoothness);
                             hsv.z *= removalValue;
-                            /*
-                            if (hsv.z > 1)
-                            {
-                                col = float4(1, 1, 1, 1);
-                            }
-                            else
-                            {
-                                col = float4(HSVtoRGB(hsv), removalValue);
-                            }
-                            */
-                            col = float4(HSVtoRGB(hsv), removalValue);
-                            //removalValue *= 200;
-                            //col = float4(removalValue, removalValue, removalValue, 1);
-                            /*
-                            if (removalValue < 1)
-                            {
-                                col = _BackgroundColor;
-                            }
-                            else
-                            {
-                                col = ColorBlend(_BackgroundColor, col);
-                            }
-                            */
-                            //col = ColorBlend(_BackgroundColor, col);
+                            col = float4(HSVtoRGB(hsv), max(0, removalValue - 0.2));
                         }
                         else
                         {
                             col = float4(HSVtoRGB(hsv), 1);
                         }
-                        
-                        
+
+
                     }
                     else //background
                     {
@@ -458,11 +408,10 @@ Shader "Hidden/GSAConferenceShader"
                     }
                 }
 
-                //col = ColorBlend(_BackgroundColor, col);
+
                 return col;
-                //return float4(col.w, col.w, col.w, col.w);
             }
             ENDCG
         }
-    }
+        }
 }
