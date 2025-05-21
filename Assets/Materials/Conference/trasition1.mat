@@ -80,6 +80,7 @@ Material:
     - _GlowThreshold: 0.381
     - _GraphicStyle: 0
     - _GridRotation: 0
+    - _GridScreenAlign: 1
     - _HueShift: 0.49
     - _HueStatic: -1
     - _LinesCount: 7

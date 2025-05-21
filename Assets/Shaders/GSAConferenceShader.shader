@@ -19,6 +19,7 @@ Shader "Hidden/GSAConferenceShader"
         _GridTiltX ("_GridTiltX", vector) = (0, 0, 0, 0)
         _GridTiltY ("_GridTiltY", vector) = (0, 0, 0, 0)
         _GridScale ("_GridScale", vector) = (0, 0, 0, 0)
+        _GridScreenAlign ("_GridScreenAlign", int) = 1
         _CubeSize ("_CubeSize", vector) = (0, 0, 0, 0)
         _CubeCornerSize ("_CubeCornerSize", float) = 0
         _HueShift ("_HueShift", float) = 0
@@ -35,6 +36,7 @@ Shader "Hidden/GSAConferenceShader"
         _GlowSeed ("_GlowSeed", float) = 0
         _GlowMinSaturation ("_GlowMinSaturation", float) = 0
         _GlowMaxValue ("_GlowMaxValue", float) = 0
+        _FadeAspect ("_FadeAspect", vector) = (1, 1, 0, 0)
         _FadeIntensity ("_FadeIntensity", float) = 0
         _FadeSmoothness ("_FadeSmoothness", float) = 1
 
@@ -51,7 +53,8 @@ Shader "Hidden/GSAConferenceShader"
     SubShader
     {
         // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+        Cull Off ZWrite Off ZTest LEqual
+        Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
         {
@@ -176,6 +179,7 @@ Shader "Hidden/GSAConferenceShader"
             uniform vector _GridTiltX;
             uniform vector _GridTiltY;
             uniform vector _GridScale; //float2
+            uniform int _GridScreenAlign; //bool
             uniform vector _CubeSize; //float2
             uniform float _CubeCornerSize;
             uniform float _HueShift;
@@ -192,6 +196,7 @@ Shader "Hidden/GSAConferenceShader"
             uniform float _GlowSeed;
             uniform float _GlowMinSaturation;
             uniform float _GlowMaxValue;
+            uniform vector _FadeAspect; //float2
             uniform float _FadeIntensity;
             uniform float _FadeSmoothness;
 
@@ -215,7 +220,10 @@ Shader "Hidden/GSAConferenceShader"
                 //center transform
                 float2 transform = i.uv - float2(0.5, 0.5);
                 //apply aspect ratio so that square grid scale generates squares
-                transform = float2(transform.x, transform.y / (_ScreenParams.x / _ScreenParams.y));
+                if (_GridScreenAlign > 0)
+                {
+                    transform = float2(transform.x, transform.y / (_ScreenParams.x / _ScreenParams.y));
+                }
 
                 //will be useful later when no tilting is required
                 float2 orgTransform = transform;
@@ -365,7 +373,7 @@ Shader "Hidden/GSAConferenceShader"
                         }
 
                         //removes cubes based on distance
-                        float removalDist = length(removalChunkId);
+                        float removalDist = length(float2(removalChunkId.x / _FadeAspect.x, removalChunkId.y / _FadeAspect.y));
                         float2 normId = chunkId / length(chunkId);
                         float angle = abs(atan2(normId.x, normId.y) / 3.14);
                         if (chunkId.x > 0) //1 half
@@ -383,7 +391,7 @@ Shader "Hidden/GSAConferenceShader"
                         {
                             float removalValue = pow((1 - (removalDist - distRand)), _FadeSmoothness);
                             hsv.z *= removalValue;
-                            col = float4(HSVtoRGB(hsv), removalValue);
+                            col = float4(HSVtoRGB(hsv), max(0, removalValue - 0.2));
                         }
                         else
                         {
@@ -398,6 +406,7 @@ Shader "Hidden/GSAConferenceShader"
                     }
                 }
 
+                
                 return col;
             }
             ENDCG
