@@ -37,6 +37,7 @@ Shader "Hidden/GSAConferenceShader"
         _GlowMinSaturation ("_GlowMinSaturation", float) = 0
         _GlowMaxValue ("_GlowMaxValue", float) = 0
         _FadeAspect ("_FadeAspect", vector) = (1, 1, 0, 0)
+        _FadeSeed ("_FadeSeed", float) = 2
         _FadeIntensity ("_FadeIntensity", float) = 0
         _FadeSmoothness ("_FadeSmoothness", float) = 1
 
@@ -197,6 +198,7 @@ Shader "Hidden/GSAConferenceShader"
             uniform float _GlowMinSaturation;
             uniform float _GlowMaxValue;
             uniform vector _FadeAspect; //float2
+            uniform float _FadeSeed;
             uniform float _FadeIntensity;
             uniform float _FadeSmoothness;
 
@@ -385,7 +387,7 @@ Shader "Hidden/GSAConferenceShader"
                             angle = 0.5 + (1 - angle) / 2;
                         }
                         
-                        float distRand = PseudoRand(angle, 2);
+                        float distRand = PseudoRand(angle, _FadeSeed);
                         removalDist *= _FadeIntensity;
                         if (removalDist > distRand)
                         {
