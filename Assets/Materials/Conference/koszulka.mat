@@ -62,27 +62,27 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
-    - _CenterCubesValue: 0.2
+    - _CenterCubesValue: 0.208
     - _ColorsSeed: 0
     - _CubeCornerSize: 0.4
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Epsilon: 31.9
-    - _FadeIntensity: 4
-    - _FadeSmoothness: 1
+    - _FadeIntensity: 4.17
+    - _FadeSmoothness: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowMaxValue: 1
     - _GlowMinSaturation: 0.5
     - _GlowSeed: 0
-    - _GlowThreshold: 0.381
+    - _GlowThreshold: 0.479
     - _GraphicStyle: 0
     - _GridRotation: 0
     - _HueShift: 0.63
     - _HueStatic: -1
-    - _LinesCount: 7
+    - _LinesCount: 0
     - _LinesDarken: 0.8
     - _LinesSeed: 0.24
     - _Metallic: 0
