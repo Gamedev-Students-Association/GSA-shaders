@@ -22,7 +22,10 @@ Shader "Hidden/GSAShader"
         _LinesSeed ("_LinesSeed", float) = 0
         _LineASpread ("_LineASpread", vector) = (0.5, 12, 0, 0)
         _LineBSpread ("_LineBSpread", vector) = (-6, 6, 0, 0)
+        _LineSaturationSpread ("_LineSaturationSpread", vector) = (0.4, 0.8, 0, 0)
+        _LineBrightnessSpread("_LineBrightnessSpread", vector) = (0.6, 0.9, 0, 0)
 
+        _LineHueShift ("_HueShift", float) = 0.25
         _GraphicStyle ("_Style", int) = 0 //0 = image pattern 1 = text pattern
     }
     SubShader
@@ -135,6 +138,10 @@ Shader "Hidden/GSAShader"
 
             uniform vector _LineASpread;
             uniform vector _LineBSpread;
+            uniform vector _LineSaturationSpread;
+            uniform vector _LineBrightnessSpread;
+
+            uniform float _LineHueShift;
 
             uniform uint _GraphicStyle;
 
@@ -237,13 +244,14 @@ Shader "Hidden/GSAShader"
 
                     }
 
-                    col = float4(HUEtoRGB((lineNum / _LinesCount + 0.25) % 1), 1);
+                    col = float4(HUEtoRGB((lineNum / _LinesCount + _LineHueShift) % 1), 1);
 
                     float3 hsv = RGBtoHSV(col.xyz);
+                    //hsv.x = 1 - hsv.x;
                     //randomized saturation per chunk
-                    hsv.y *= lerp(0.4, 0.8, PseudoRand(lineNum + _ColorsSeed));
+                    hsv.y *= lerp(_LineSaturationSpread.x, _LineSaturationSpread.y, PseudoRand(lineNum + _ColorsSeed));
                     //randomized brightness per chunk
-                    hsv.z *= lerp(0.6, 0.9, PseudoRand(lineNum + _ColorsSeed + 24));
+                    hsv.z *= lerp(_LineBrightnessSpread.x, _LineBrightnessSpread.y, PseudoRand(lineNum + _ColorsSeed + 24));
 
                     col = float4(HSVtoRGB(hsv), 1);
                 }

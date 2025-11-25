@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CardBackground1
+  m_Shader: {fileID: 4800000, guid: 6e9b5d500d4e7314fad3ff6975d4a68c, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _CenterCubesValue: 0.2
+    - _ColorsSeed: 0
+    - _CubeCornerSize: 0.4
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Epsilon: 31.9
+    - _FadeIntensity: 0.89
+    - _FadeSeed: 3.06
+    - _FadeSmoothness: 0.46
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _GlowMaxValue: 1
+    - _GlowMinSaturation: 0.5
+    - _GlowSeed: 0
+    - _GlowThreshold: 0.381
+    - _GraphicStyle: 0
+    - _GridRotation: 0
+    - _GridScreenAlign: 1
+    - _HueShift: 1.55
+    - _HueStatic: -1
+    - _LinesCount: 0
+    - _LinesDarken: 0.8
+    - _LinesSeed: 0.24
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SaturationSeed: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ValueSeed: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CompoundLineRange: {r: 2, g: 6, b: 0, a: 0}
+    - _CubeSize: {r: 0.7, g: 0.7, b: 0, a: 0}
+    - _CubesSaturation: {r: 0.6, g: 0.6, b: 0, a: 0}
+    - _CubesValue: {r: 0.4, g: 0.6, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FadeAspect: {r: 0.79, g: 0.3, b: 0, a: 0}
+    - _GlowScale: {r: 0, g: 0, b: 0, a: 0}
+    - _GridScale: {r: 0.05, g: 0.05, b: 0, a: 0}
+    - _GridTilt: {r: 19.51, g: 0, b: 0, a: 0}
+    - _GridTiltX: {r: 0, g: 0.05, b: 0, a: 0}
+    - _GridTiltY: {r: 0, g: -0.05, b: 0, a: 0}
+    - _GridTranslation: {r: 0, g: -0.63, b: 0, a: 0}
+    - _HueExponenta: {r: 1, g: 2.38, b: 1, a: 1}
+    - _HueScale: {r: 0.2, g: 0.5, b: 0, a: 0}
+    - _HueShiftExponenta: {r: 1, g: 3, b: 1, a: 3}
+    - _HueShiftScale: {r: 1, g: 1, b: 0, a: 0}
+    - _HueSign: {r: -1, g: -1, b: 1, a: 1}
+    - _LineASpread: {r: 0.2, g: 12, b: 0, a: 0}
+    - _LineBSpread: {r: -6, g: 6, b: 0, a: 0}
+    - _LinesCenterPos: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

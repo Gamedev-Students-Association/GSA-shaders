@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GSAShader
+  m_Name: Wizytowka 8
   m_Shader: {fileID: 4800000, guid: 541ef6d0535f1a941ae69632f40ccfc8, type: 3}
-  m_Parent: {fileID: 2100000, guid: 5bff054270aacb245acf0a454cc41aba, type: 2}
+  m_Parent: {fileID: 2100000, guid: cb74f6a79c659524aaad10a9ad43c7d7, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -19,17 +19,20 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties: _LineASpread
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _ColorsSeed: 3.71
-    - _GraphicStyle: 1
-    - _LinesCount: 3
-    - _LinesDarken: 0.782
-    - _LinesSeed: 20.6
-    m_Colors: []
+    - _ColorsSeed: 8.1
+    - _LineHueShift: 0.25
+    - _LinesCount: 38.61
+    - _LinesSeed: 5.64
+    m_Colors:
+    - _GridTranslation: {r: 0.52, g: 0.97, b: 0, a: 0}
+    - _LineASpread: {r: 7.3, g: 1.02, b: 0, a: 0}
+    - _LineBSpread: {r: -3.35, g: 1.65, b: 0, a: 0}
+    - _LineSaturationSpread: {r: 0.6, g: 0.8, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
