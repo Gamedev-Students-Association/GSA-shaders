@@ -378,11 +378,11 @@ Shader "GSA/GSAConferenceShader2025"
                         float removalDist = removalChunkId.y / _FadeAspect.y;
                         if (removalChunkId.x < 0)
                         {
-                            removalDist /= (-removalChunkId.x + 1) * _FadeAspect.x;
+                            removalDist /= (-removalChunkId.x * _FadeAspect.x + 1);
                         }
                         else
                         {
-                            removalDist /= (1 / (removalChunkId.x + 1)) * _FadeAspect.x;
+                            removalDist /= 1 / (removalChunkId.x * _FadeAspect.x + 1);
                         }
                         //float removalDist = removalChunkId.y / (_FadeAspect.y * min(1, (removalChunkId.x + 0) * _FadeAspect.x));
                         //float removalDist = length(float2(removalChunkId.x / _FadeAspect.x, removalChunkId.y / _FadeAspect.y));
